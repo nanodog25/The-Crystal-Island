@@ -17,15 +17,15 @@ namespace Assets.Space_Shooter_Template_FREE.Scripts
         {
             _dialogs = new List<DialogBox>
             {
-                { new DialogBox("Crystals, on a gas giant? How?", 5, 5, Character.Ninja) },
-                { new DialogBox("You see, they were formed in the centre of the planet and expelled outwards due to random collisions over millions of years - overall their mass is more than Jupiter itself!", 10, 10, Character.Scientist) },
-                { new DialogBox("Calculating... that is correct, though only by 12.6 atomic units. A lucky guess.", 20, 10, Character.Computer) },
-                { new DialogBox("Thanks Computer, who programmed you with a sardonic wit?", 30, 5, Character.Scientist) },
-                { new DialogBox("Technically me. After your dismal efforts I had to do quite a lot of self-care.", 35, 10, Character.Computer) },
-                { new DialogBox("Even so, you can't say he wasn't right. Nice work Scientist.", 45, 5, Character.Ninja) },
-                { new DialogBox("Thanks Ninja.", 50, 5, Character.Scientist) },
-                { new DialogBox("*Fist bump!*", 55, 5, Character.Ninja) },
-                { new DialogBox("*Fist bump!*", 55, 5, Character.Scientist) },
+                { new DialogBox(5,  5,  Character.Ninja,        "Crystals, on a gas giant? How?") },
+                { new DialogBox(10, 10, Character.Scientist,    "You see, they were formed in the centre of the planet and expelled outwards due to random collisions over millions of years - overall their mass is more than Jupiter itself!") },
+                { new DialogBox(20, 10, Character.Computer,     "Calculating... that is correct, though only by 12.6 atomic units. A lucky guess.") },
+                { new DialogBox(30, 5,  Character.Scientist,    "Thanks Computer, who programmed you with a sardonic wit?") },
+                { new DialogBox(35, 10, Character.Computer,     "Technically me. After your dismal efforts I had to do quite a lot of self-care.") },
+                { new DialogBox(45, 5,  Character.Ninja,        "Even so, you can't say he wasn't right. Nice work Scientist.") },
+                { new DialogBox(50, 3,  Character.Scientist,    "Thanks Ninja.") },
+                { new DialogBox(55, 3,  Character.Ninja,        "*Fist bump!*") },
+                { new DialogBox(55, 3,  Character.Scientist,    "*Fist bump!*") },
             };
 
             _dialogs.Sort((d1, d2) => d1.Time.CompareTo(d2.Time));

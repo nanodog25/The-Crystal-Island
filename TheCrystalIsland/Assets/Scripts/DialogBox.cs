@@ -19,7 +19,7 @@ namespace Assets.Scripts
             { Character.Computer, new Vector2(Screen.width / 2, 50)},
         };
 
-        public DialogBox(string text, float time, float duration, Character character)
+        public DialogBox(float time, float duration, Character character, string text)
         {
             _text = text;
             Time = time;
