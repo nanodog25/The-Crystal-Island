@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platformer.UI
 {
@@ -17,13 +15,27 @@ namespace Platformer.UI
             {
                 var active = i == index;
                 var g = panels[i];
-                if (g.activeSelf != active) g.SetActive(active);
+                g.SetActive(active);
             }
         }
 
         void OnEnable()
         {
-            SetActivePanel(0);
+            SetActivePanel(-1);
+        }
+
+        public void LevelSelect(int index)
+        {
+            FindObjectOfType<MetaGameController>().LevelSelect(index);
+        }
+
+        public void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

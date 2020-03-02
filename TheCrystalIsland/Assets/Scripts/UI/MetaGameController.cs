@@ -1,6 +1,8 @@
 using Platformer.Mechanics;
 using Platformer.UI;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Platformer.UI
 {
@@ -25,10 +27,16 @@ namespace Platformer.UI
         /// </summary>
         public GameController gameController;
 
-        bool showMainCanvas = false;
+        bool showMainCanvas = true;
 
         void OnEnable()
         {
+            _ToggleMainMenu(showMainCanvas);
+        }
+
+        private void OnLevelWasLoaded(int level)
+        {
+            showMainCanvas = false;
             _ToggleMainMenu(showMainCanvas);
         }
 
@@ -69,5 +77,9 @@ namespace Platformer.UI
             }
         }
 
+        public void LevelSelect(int index)
+        {
+            SceneManager.LoadScene(index);
+        }
     }
 }
