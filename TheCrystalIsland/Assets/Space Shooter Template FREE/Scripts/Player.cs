@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 
     public static Player Instance;
     private Rigidbody2D _rb;
+    private PlayerMoving _movement;
     private float _hitCoolDown = 1f;
     private float _time;
     private int _hits;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
             Instance = this;
 
         _rb = GetComponent<Rigidbody2D>();
+        _movement = GetComponent<PlayerMoving>();
         var damageFX = GetComponentsInChildren<ParticleSystem>();
         _hitEffects[0] = damageFX[0];
         _hitEffects[1] = damageFX[3];
@@ -31,7 +33,7 @@ public class Player : MonoBehaviour
             if (_time < 0)
             {
                 _time = 0;
-                GetComponent<PlayerMoving>().IsControlActive = true;
+                _movement.IsControlActive = true;
             }
         }
     }
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour
         if (_time == 0)
         {
             _time = _hitCoolDown;
-            GetComponent<PlayerMoving>().IsControlActive = false;
+            _movement.IsControlActive = false;
             Vector3 direction = transform.position - position;
             _rb.velocity = Vector3.zero;
             _rb.angularVelocity = 0;
@@ -52,14 +54,17 @@ public class Player : MonoBehaviour
             if (_hits == 3)
             {
                 _hitEffects[1].Play();
+                _movement.ReduceControl();
             }
             else if (_hits == 5)
             {
                 _hitEffects[2].Play();
+                _movement.ReduceControl();
             }
             else if (_hits == 8)
             {
                 _hitEffects[0].Play();
+                _movement.ReduceControl();
             }
         }
         //change sprite

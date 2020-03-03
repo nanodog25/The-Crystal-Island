@@ -10,10 +10,11 @@ public class Enemy : MonoBehaviour
     {
         if (IsTravelStraight)
         {
-            transform.position += (new Vector3(IsFromLeft ? 1 : -1, -1) * Speed / 100 * Time.deltaTime);
-            if (transform.position.y > Screen.height + 10)
-                Destroy(gameObject);
+            transform.position += (new Vector3(IsFromLeft ? 1 : -1, -2f) * Speed * Time.deltaTime);
         }
+
+        if (transform.position.y > Screen.height + 10)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

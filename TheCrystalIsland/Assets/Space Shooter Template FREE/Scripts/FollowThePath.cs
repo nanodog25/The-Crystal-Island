@@ -16,6 +16,8 @@ public class FollowThePath : MonoBehaviour {
     Vector3[] pathPositions;                //path points in vector3
     [HideInInspector] public bool movingIsActive;   //whether 'Enemy' moves or not
 
+    private float _offset;
+
     //setting path parameters for the 'Enemy' and sending the 'Enemy' to the path starting point
     public void SetPath() 
     {
@@ -29,6 +31,7 @@ public class FollowThePath : MonoBehaviour {
         if (!rotationByPath)
             transform.rotation = Quaternion.identity;
         movingIsActive = true;
+        _offset = UnityEngine.Random.Range(0, 3);
     }
 
     private void Update()
@@ -37,7 +40,7 @@ public class FollowThePath : MonoBehaviour {
         {
             currentPathPercent += speed / 100 * Time.deltaTime;     //every update calculating current path percentage according to the defined speed
 
-            transform.position = NewPositionByPath(pathPositions, currentPathPercent); //moving the 'Enemy' to the path position, calculated in method NewPositionByPath
+            transform.position = NewPositionByPath(pathPositions, currentPathPercent) + new Vector3(0, _offset); //moving the 'Enemy' to the path position, calculated in method NewPositionByPath
             if (rotationByPath)                            //rotating the 'Enemy' in path direction, if set 'rotationByPath'
             {
                 transform.right = Interpolate(CreatePoints(pathPositions), currentPathPercent + 0.01f) - transform.position;

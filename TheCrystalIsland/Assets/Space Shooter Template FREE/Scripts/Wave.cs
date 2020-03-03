@@ -38,6 +38,7 @@ public class Wave : MonoBehaviour {
     [Tooltip("if testMode is marked the wave will be re-generated after 3 sec")]
     public bool testMode;
 
+
     private void Start()
     {
         StartCoroutine(CreateEnemyWave()); 

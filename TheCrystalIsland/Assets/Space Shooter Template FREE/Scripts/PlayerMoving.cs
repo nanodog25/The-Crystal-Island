@@ -21,6 +21,9 @@ public class PlayerMoving : MonoBehaviour {
     Camera mainCamera;
     public bool IsControlActive = true;
     private Rigidbody2D _rb;
+    private bool _lessControl = false;
+    private bool _noControl = false;
+    private bool _ahhh = false;
 
     public static PlayerMoving instance; //unique instance of the script for easy access to the script
 
@@ -42,24 +45,29 @@ public class PlayerMoving : MonoBehaviour {
     {
         if (IsControlActive)
         {
-#if UNITY_STANDALONE || UNITY_EDITOR    //if the current platform is not mobile, setting mouse handling 
+            Vector3 move;
+            move.x = Input.GetAxis("Horizontal");
+            move.y = Input.GetAxis("Vertical");
+            move.z = 0;
 
-            //if (Input.GetMouseButton(0)) //if mouse button was pressed       
-            //{
-            //    Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //calculating mouse position in the worldspace
-            //    mousePosition.z = transform.position.z;
-            //    transform.position = Vector3.MoveTowards(transform.position, mousePosition, 30 * Time.deltaTime);
-            //}
-            //else
+            if (!_lessControl)
             {
-                Vector2 move;
-                move.x = Input.GetAxis("Horizontal");
-                move.y = Input.GetAxis("Vertical");
-
+                transform.position += move * Time.deltaTime * 20;
+            }
+            else if (!_noControl)
+            {
+                transform.position += move * Time.deltaTime * 20;
+                _rb.AddForce(new Vector2(move.x * 2, move.y * 2));
+            }
+            else if (!_ahhh)
+            {
                 float xPower = _rb.velocity.normalized.x == move.x ? 2 : 10;
                 float yPower = _rb.velocity.normalized.y == move.y ? 2 : 10;
                 _rb.AddForce(new Vector2(move.x * xPower, move.y * yPower));
-#endif
+            }
+            else
+            {
+                _rb.AddForce(new Vector2(move.x * 0.5f, move.y * 0.5f));
             }
         }
         transform.position = new Vector3    //if 'Player' crossed the movement borders, returning him back 
@@ -70,11 +78,21 @@ public class PlayerMoving : MonoBehaviour {
         );
     }
 
-    void ResizeBorders() 
+    private void ResizeBorders() 
     {
         borders.minX = mainCamera.ViewportToWorldPoint(Vector2.zero).x + borders.minXOffset;
         borders.minY = mainCamera.ViewportToWorldPoint(Vector2.zero).y + borders.minYOffset;
         borders.maxX = mainCamera.ViewportToWorldPoint(Vector2.right).x - borders.maxXOffset;
         borders.maxY = mainCamera.ViewportToWorldPoint(Vector2.up).y - borders.maxYOffset;
+    }
+
+    public void ReduceControl()
+    {
+        if (!_lessControl)
+            _lessControl = true;
+        else if (!_noControl)
+            _noControl = true;
+        else
+            _ahhh = true;
     }
 }

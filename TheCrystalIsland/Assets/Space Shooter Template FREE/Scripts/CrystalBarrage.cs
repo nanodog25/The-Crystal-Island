@@ -17,7 +17,7 @@ namespace Assets.Space_Shooter_Template_FREE.Scripts
         public float speed;
 
         [Tooltip("time between emerging of the enemies in the wave")]
-        public float timeBetween;
+        public float timeBetween = 0.001f;
 
         public float SpaceBetween;
 

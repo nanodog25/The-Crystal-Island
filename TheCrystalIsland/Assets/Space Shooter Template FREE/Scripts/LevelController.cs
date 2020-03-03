@@ -1,52 +1,113 @@
-﻿using System.Collections;
+﻿using Assets.Space_Shooter_Template_FREE.Scripts;
+using System.Collections;
 using UnityEngine;
-
-#region Serializable classes
-[System.Serializable]
-public class EnemyWaves 
-{
-    [Tooltip("time for wave generation from the moment the game started")]
-    public float timeToStart;
-
-    [Tooltip("Enemy wave's prefab")]
-    public GameObject wave;
-}
-
-#endregion
 
 public class LevelController : MonoBehaviour {
 
     //Serializable classes implements
-    public EnemyWaves[] enemyWaves; 
     Camera mainCamera;
     public GameObject ScanningObj;
-    public float TimeForScanningObject;
+    public GameObject Asteroid;
+    public GameObject CrystalBarrage;
+    private float _time;
+    private float _totalTime = 200;
 
     private void Start()
     {
         mainCamera = Camera.main;
-        //for each element in 'enemyWaves' array creating coroutine which generates the wave
-        for (int i = 0; i<enemyWaves.Length; i++) 
-        {
-            StartCoroutine(CreateEnemyWave(enemyWaves[i].timeToStart, enemyWaves[i].wave));
-        }
+        StartCoroutine(AsteroidCreation());
+        StartCoroutine(CrystalCreation());
         StartCoroutine(PowerupBonusCreation());
     }
 
-    //Create a new wave after a delay
-    IEnumerator CreateEnemyWave(float delay, GameObject Wave) 
+    private void Update()
     {
-        if (delay != 0)
-            yield return new WaitForSeconds(delay);
-        if (Player.Instance != null)
-            Instantiate(Wave);
+        _time += Time.deltaTime;
+    }
+
+    IEnumerator AsteroidCreation()
+    {
+        while (true)
+        {
+            float nextTime;
+            if (_time < 50)
+                nextTime = Random.Range(2f, 4f);
+            else if (_time < 100)
+                nextTime = Random.Range(1f, 2f);
+            else if (_time < 150)
+                nextTime = Random.Range(0.2f, 0.5f);
+            else
+                nextTime = _totalTime;
+
+            yield return new WaitForSeconds(nextTime);
+            var a = Instantiate(
+                Asteroid,
+                new Vector2(
+                    Random.Range(PlayerMoving.instance.borders.minX, PlayerMoving.instance.borders.maxX),
+                    mainCamera.ViewportToWorldPoint(Vector2.up).y + ScanningObj.GetComponent<Renderer>().bounds.size.y / 2),
+                Quaternion.identity
+                );
+            float scale = Random.Range(0.3f, 1f);
+            a.transform.localScale = new Vector3(scale, scale, 1);
+        }
+    }
+
+    IEnumerator CrystalCreation()
+    {
+        while (true)
+        {
+            float nextTime;
+            int count;
+            float speed;
+            float SpaceBetween;
+            if (_time < 50)
+            {
+                nextTime = 50;
+                count = Random.Range(3, 5);
+                speed = Random.Range(3, 5);
+                SpaceBetween = Random.Range(5f, 10f);
+            }
+            else if (_time < 100)
+            {
+                nextTime = Random.Range(5f, 10f);
+                count = Random.Range(3, 5);
+                speed = Random.Range(3, 5);
+                SpaceBetween = Random.Range(5f, 10f);
+            }
+            else if (_time < 150)
+            {
+                nextTime = Random.Range(10f, 15f);
+                count = 1;
+                speed = Random.Range(3, 5);
+                SpaceBetween = 0;
+            }
+            else
+            {
+                nextTime = Random.Range(1f, 3f);
+                count = Random.Range(12, 20);
+                speed = Random.Range(10, 15);
+                SpaceBetween = Random.Range(1f, 2f);
+            }
+
+            yield return new WaitForSeconds(nextTime);
+            var g = Instantiate(CrystalBarrage);
+            var cb = g.GetComponent<CrystalBarrage>();
+            cb.count = count;
+            cb.speed = speed;
+            cb.SpaceBetween = SpaceBetween;
+            cb.IsFromLeft = Random.Range(0, 2) == 0;
+
+        }
     }
 
     IEnumerator PowerupBonusCreation()
     {
         while (true)
         {
-            yield return new WaitForSeconds(TimeForScanningObject);
+            if (_time > 100)
+                yield return new WaitForSeconds(_totalTime);
+
+            yield return new WaitForSeconds(25);
             Instantiate(
                 ScanningObj,
                 //Set the position for the new bonus: for X-axis - random position between the borders of 'Player's' movement; for Y-axis - right above the upper screen border 
