@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private float _time;
     private int _hits;
     private ParticleSystem[] _hitEffects = new ParticleSystem[3];
+    private float _timeSinceStart = 0;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        _timeSinceStart += Time.deltaTime;
+
         if (_time != 0)
         {
             _time -= Time.deltaTime;
@@ -61,7 +64,7 @@ public class Player : MonoBehaviour
                 _hitEffects[2].Play();
                 _movement.ReduceControl();
             }
-            else if (_hits == 8)
+            else if (_timeSinceStart > 150f && _hits >= 8)
             {
                 _hitEffects[0].Play();
                 _movement.ReduceControl();
