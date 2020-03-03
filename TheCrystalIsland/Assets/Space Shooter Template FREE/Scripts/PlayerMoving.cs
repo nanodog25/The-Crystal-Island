@@ -19,7 +19,8 @@ public class PlayerMoving : MonoBehaviour {
     [Tooltip("offset from viewport borders for player's movement")]
     public Borders borders;
     Camera mainCamera;
-    bool controlIsActive = true; 
+    public bool IsControlActive = true;
+    private Rigidbody2D _rb;
 
     public static PlayerMoving instance; //unique instance of the script for easy access to the script
 
@@ -27,6 +28,8 @@ public class PlayerMoving : MonoBehaviour {
     {
         if (instance == null)
             instance = this;
+
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -37,38 +40,36 @@ public class PlayerMoving : MonoBehaviour {
 
     private void Update()
     {
-        if (controlIsActive)
+        if (IsControlActive)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR    //if the current platform is not mobile, setting mouse handling 
 
-            if (Input.GetMouseButton(0)) //if mouse button was pressed       
+            //if (Input.GetMouseButton(0)) //if mouse button was pressed       
+            //{
+            //    Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //calculating mouse position in the worldspace
+            //    mousePosition.z = transform.position.z;
+            //    transform.position = Vector3.MoveTowards(transform.position, mousePosition, 30 * Time.deltaTime);
+            //}
+            //else
             {
-                Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition); //calculating mouse position in the worldspace
-                mousePosition.z = transform.position.z;
-                transform.position = Vector3.MoveTowards(transform.position, mousePosition, 30 * Time.deltaTime);
-            }
-#endif
+                Vector2 move;
+                move.x = Input.GetAxis("Horizontal");
+                move.y = Input.GetAxis("Vertical");
 
-#if UNITY_IOS || UNITY_ANDROID //if current platform is mobile, 
-
-            if (Input.touchCount == 1) // if there is a touch
-            {
-                Touch touch = Input.touches[0];
-                Vector3 touchPosition = mainCamera.ScreenToWorldPoint(touch.position);  //calculating touch position in the world space
-                touchPosition.z = transform.position.z;
-                transform.position = Vector3.MoveTowards(transform.position, touchPosition, 30 * Time.deltaTime);
-            }
+                float xPower = _rb.velocity.normalized.x == move.x ? 2 : 10;
+                float yPower = _rb.velocity.normalized.y == move.y ? 2 : 10;
+                _rb.AddForce(new Vector2(move.x * xPower, move.y * yPower));
 #endif
-            transform.position = new Vector3    //if 'Player' crossed the movement borders, returning him back 
-                (
-                Mathf.Clamp(transform.position.x, borders.minX, borders.maxX),
-                Mathf.Clamp(transform.position.y, borders.minY, borders.maxY),
-                0
-                );
+            }
         }
+        transform.position = new Vector3    //if 'Player' crossed the movement borders, returning him back 
+        (
+            Mathf.Clamp(transform.position.x, borders.minX, borders.maxX),
+            Mathf.Clamp(transform.position.y, borders.minY, borders.maxY),
+            0
+        );
     }
 
-    //setting 'Player's' movement borders according to Viewport size and defined offset
     void ResizeBorders() 
     {
         borders.minX = mainCamera.ViewportToWorldPoint(Vector2.zero).x + borders.minXOffset;

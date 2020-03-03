@@ -8,19 +8,9 @@ using System;
 /// It also defines their shooting mode. It defines their moving path.
 /// </summary>
 [System.Serializable]
-public class Shooting
-{
-    [Range(0,100)]
-    [Tooltip("probability with which the ship of this wave will make a shot")]
-    public int shotChance;
-
-    [Tooltip("min and max time from the beginning of the path when the enemy can make a shot")]
-    public float shotTimeMin, shotTimeMax;
-}
 
 public class Wave : MonoBehaviour {
 
-    #region FIELDS
     [Tooltip("Enemy's prefab")]
     public GameObject enemy;
 
@@ -44,11 +34,9 @@ public class Wave : MonoBehaviour {
 
     [Tooltip("color of the path in the Editor")]
     public Color pathColor = Color.yellow;
-    public Shooting shooting;
 
     [Tooltip("if testMode is marked the wave will be re-generated after 3 sec")]
     public bool testMode;
-    #endregion
 
     private void Start()
     {
@@ -61,16 +49,13 @@ public class Wave : MonoBehaviour {
         {
             GameObject newEnemy;
             newEnemy = Instantiate(enemy, enemy.transform.position, Quaternion.identity);
+            newEnemy.transform.localScale = new Vector3(UnityEngine.Random.Range(0.3f, 0.8f), UnityEngine.Random.Range(0.3f, 0.8f), 1);
             FollowThePath followComponent = newEnemy.GetComponent<FollowThePath>(); 
             followComponent.path = pathPoints;         
             followComponent.speed = speed;        
             followComponent.rotationByPath = rotationByPath;
             followComponent.loop = Loop;
             followComponent.SetPath(); 
-            Enemy enemyComponent = newEnemy.GetComponent<Enemy>();  
-            enemyComponent.shotChance = shooting.shotChance; 
-            enemyComponent.shotTimeMin = shooting.shotTimeMin; 
-            enemyComponent.shotTimeMax = shooting.shotTimeMax;
             newEnemy.SetActive(true);      
             yield return new WaitForSeconds(timeBetween); 
         }
