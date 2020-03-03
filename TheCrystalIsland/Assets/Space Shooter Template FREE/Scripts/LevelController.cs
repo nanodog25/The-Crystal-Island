@@ -1,6 +1,7 @@
 ﻿using Assets.Space_Shooter_Template_FREE.Scripts;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class LevelController : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class LevelController : MonoBehaviour {
     public GameObject ScanningObj;
     public GameObject Asteroid;
     public GameObject CrystalBarrage;
+    public PlayableDirector EndCutscene;
     private float _time;
     private float _totalTime = 200;
 
@@ -18,6 +20,7 @@ public class LevelController : MonoBehaviour {
         StartCoroutine(AsteroidCreation());
         StartCoroutine(CrystalCreation());
         StartCoroutine(PowerupBonusCreation());
+        StartCoroutine(PlayEndcutscene());
     }
 
     private void Update()
@@ -27,7 +30,7 @@ public class LevelController : MonoBehaviour {
 
     IEnumerator AsteroidCreation()
     {
-        while (true)
+        while (_time < _totalTime)
         {
             float nextTime;
             if (_time < 50)
@@ -54,7 +57,7 @@ public class LevelController : MonoBehaviour {
 
     IEnumerator CrystalCreation()
     {
-        while (true)
+        while (_time < _totalTime)
         {
             float nextTime;
             int count;
@@ -102,7 +105,7 @@ public class LevelController : MonoBehaviour {
 
     IEnumerator PowerupBonusCreation()
     {
-        while (true)
+        while (_time < _totalTime)
         {
             if (_time > 100)
                 yield return new WaitForSeconds(_totalTime);
@@ -117,5 +120,11 @@ public class LevelController : MonoBehaviour {
                 Quaternion.identity
                 );
         }
+    }
+
+    IEnumerator PlayEndcutscene()
+    {
+        yield return new WaitForSeconds(_totalTime);
+        EndCutscene.Play();
     }
 }

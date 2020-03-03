@@ -61,13 +61,14 @@ public class PlayerMoving : MonoBehaviour {
             }
             else if (!_ahhh)
             {
-                float xPower = _rb.velocity.normalized.x == move.x ? 2 : 10;
-                float yPower = _rb.velocity.normalized.y == move.y ? 2 : 10;
-                _rb.AddForce(new Vector2(move.x * xPower, move.y * yPower));
+                transform.position += move * Time.deltaTime * 15;
+                _rb.AddForce(new Vector2(move.x * 2, move.y * 2));
             }
             else
             {
-                _rb.AddForce(new Vector2(move.x * 0.5f, move.y * 0.5f));
+                float xPower = _rb.velocity.normalized.x == move.x ? 2 : 10;
+                float yPower = _rb.velocity.normalized.y == move.y ? 2 : 10;
+                _rb.AddForce(new Vector2(move.x * xPower, move.y * yPower));
             }
         }
         transform.position = new Vector3    //if 'Player' crossed the movement borders, returning him back 

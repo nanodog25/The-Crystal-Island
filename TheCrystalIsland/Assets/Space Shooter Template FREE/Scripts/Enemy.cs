@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     {
         if (IsTravelStraight)
         {
-            transform.position += (new Vector3(IsFromLeft ? 1 : -1, -2f) * Speed * Time.deltaTime);
+            transform.position += (new Vector3(IsFromLeft ? 2 : -2, -2f) * Speed * Time.deltaTime);
         }
 
         if (transform.position.y > Screen.height + 10)
