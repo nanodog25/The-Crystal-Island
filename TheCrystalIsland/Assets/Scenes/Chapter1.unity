@@ -610,6 +610,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 731689726}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &887386778 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2954571283388911826, guid: d7c515515ccf3d94ea7e1184e30774ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 1868012540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f4a4ae3a36547dd915a91ceebed970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &990489135
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +862,22 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4355695393464376, guid: 5a213a4dde83c404f8856922c5fc08ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355695393464376, guid: 5a213a4dde83c404f8856922c5fc08ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1990001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4858090375074950, guid: 5a213a4dde83c404f8856922c5fc08ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4858090375074950, guid: 5a213a4dde83c404f8856922c5fc08ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1990001
+      objectReference: {fileID: 0}
     - target: {fileID: 199707794767241082, guid: 5a213a4dde83c404f8856922c5fc08ff,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -983,6 +1011,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009130065698333721, guid: 9a1bd12ebb35d4dc997aa0c5494eda9b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4009130065698333725, guid: 9a1bd12ebb35d4dc997aa0c5494eda9b,
         type: 3}
@@ -1468,6 +1501,7 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 91ca74f1bb3884a459a42b2d38db6f3c, type: 2}
+    - {fileID: 11400000, guid: 5688a27d5246f2145ad429e40b3cd6e0, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1479,6 +1513,20 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 887386778}
+          m_TargetAssemblyTypeName: Platformer.UI.MetaGameController, Assembly-CSharp
+          m_MethodName: LevelSelect
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -1617,7 +1665,7 @@ PlayableDirector:
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: cdb9147b960f43049949b867317f84e0, type: 2}
   m_InitialState: 0
-  m_WrapMode: 2
+  m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:

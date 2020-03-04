@@ -17,15 +17,18 @@ namespace Assets.Space_Shooter_Template_FREE.Scripts
         {
             _dialogs = new List<DialogBox>
             {
-                { new DialogBox(5,  5,  Character.Ninja,        "Crystals, on a gas giant? How?") },
-                { new DialogBox(10, 10, Character.Scientist,    "You see, they were formed in the centre of the planet and expelled outwards due to random collisions over millions of years - overall their mass is more than Jupiter itself!") },
-                { new DialogBox(20, 10, Character.Computer,     "Calculating... that is correct, though only by 12.6 atomic units. A lucky guess.") },
-                { new DialogBox(30, 5,  Character.Scientist,    "Thanks Computer, who programmed you with a sardonic wit?") },
-                { new DialogBox(35, 10, Character.Computer,     "Technically me. After your dismal efforts I had to do quite a lot of self-care.") },
-                { new DialogBox(45, 5,  Character.Ninja,        "Even so, you can't say he wasn't right. Nice work Scientist.") },
-                { new DialogBox(50, 3,  Character.Scientist,    "Thanks Ninja.") },
-                { new DialogBox(55, 3,  Character.Ninja,        "*Fist bump!*") },
-                { new DialogBox(55, 3,  Character.Scientist,    "*Fist bump!*") },
+                { new DialogBox(5,  5,  Character.Ninja,        "Since when was there an asteroid feild in this sector outside of Jupiter.") },
+                { new DialogBox(10, 10, Character.Scientist,    "I don't know, I'm receiving a lot of interfeirance from Jupiters outer Atmophere. The scanners have gone off line!") },
+                { new DialogBox(20, 10, Character.Computer,     "See if you can temnporarly use those gas clouds to power them up again.") },
+                { new DialogBox(30, 5,  Character.Scientist,    "Good idea, but for now I think I'm going to focus on keeping us all alive.") },
+                { new DialogBox(35, 10, Character.Computer,     "Yeah that would be prefrable, I think the interfearance is coming from the island.") },
+                { new DialogBox(45, 5,  Character.Ninja,        "How could an island interfear with our ship?") },
+                { new DialogBox(50, 3,  Character.Scientist,    "I dont know, but i have a feeling we're going to find out soon enough!.") },
+                { new DialogBox(55, 5,  Character.Computer,     "Watch Out!!!!!") },
+                { new DialogBox(60, 5, Character.Ninja,         "Dont worry, if there is anyone who could get us through this its our pilot") },
+                { new DialogBox(65, 5, Character.Scientist,      "Thanks!") },
+                { new DialogBox(72, 3,  Character.Ninja,        "*Fist bump!*") },
+                { new DialogBox(72, 3,  Character.Scientist,    "*Fist bump!*") },
             };
 
             _dialogs.Sort((d1, d2) => d1.Time.CompareTo(d2.Time));
