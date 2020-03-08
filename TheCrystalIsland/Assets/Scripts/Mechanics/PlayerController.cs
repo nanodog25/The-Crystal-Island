@@ -42,6 +42,9 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
+        private bool _isPuzzleMode;
+        public GameObject Minigame;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -49,12 +52,22 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            Minigame.SetActive(false);
         }
 
         protected override void Update()
         {
             if (controlEnabled)
             {
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    _isPuzzleMode = !_isPuzzleMode;
+                    Minigame.SetActive(_isPuzzleMode);
+                }
+
+                if (_isPuzzleMode)
+                    return;
+
                 move.x = Input.GetAxis("Horizontal");
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                     jumpState = JumpState.PrepareToJump;
