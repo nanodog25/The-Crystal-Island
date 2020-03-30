@@ -5,6 +5,7 @@ using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
 using Platformer.Core;
+using Assets.Scripts.Gameplay;
 
 namespace Platformer.Mechanics
 {
@@ -45,6 +46,9 @@ namespace Platformer.Mechanics
         private bool _isPuzzleMode;
         public GameObject Minigame;
 
+        public Sword SwordPrefab;
+        private Sword _sword;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -68,6 +72,32 @@ namespace Platformer.Mechanics
                 if (_isPuzzleMode)
                     return;
 
+                if (_sword == null && Input.GetMouseButtonDown(0))
+                {
+                    ReadySword();
+                    move.x = 0;
+                }
+
+                if (_sword != null && _sword.State == SwordState.Windup)
+                {
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        ThrowSword();
+                    }
+                    return;
+                }
+                else if (_sword != null)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        TeleportToSword();
+                    }
+                    else if (Input.GetMouseButtonDown(1))
+                    {
+                        RetrieveSword();
+                    }
+                }
+
                 move.x = Input.GetAxis("Horizontal");
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                     jumpState = JumpState.PrepareToJump;
@@ -83,6 +113,27 @@ namespace Platformer.Mechanics
             }
             UpdateJumpState();
             base.Update();
+        }
+
+        private void ReadySword()
+        {
+            _sword = Instantiate(SwordPrefab, transform);
+        }
+
+        private void ThrowSword()
+        {
+            _sword.transform.parent = transform.parent;
+            _sword.Throw();
+        }
+
+        private void TeleportToSword()
+        {
+
+        }
+
+        private void RetrieveSword()
+        {
+            Destroy(_sword.gameObject);
         }
 
         void UpdateJumpState()
